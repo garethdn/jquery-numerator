@@ -7,7 +7,11 @@
         delimiter: undefined,
         rounding: 0,
         toValue: undefined,
-        fromValue: undefined
+        fromValue: undefined,
+        onStart: function(){},
+        onStep: function(){},
+        onProgress: function(){},
+        onComplete: function(){}
     };
 
     function Plugin ( element, options ) {
@@ -24,22 +28,34 @@
             this.setValue();
         },
 
-        setValue: function() {
-            var self = this;
-
-            $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
-                duration: self.settings.duration,
-                easing: self.settings.easing,
-                step: function(now, fx) {
-                    $(self.element).text(self.format(now));
-                }
-            });
-        },
-
         parseElement: function () {
             var elText = $(this.element).text().trim();
 
             this.settings.fromValue = this.format(elText);
+        },
+
+        setValue: function() {
+            var self = this;
+
+            $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
+
+                duration: self.settings.duration,
+
+                easing: self.settings.easing,
+
+                start: self.settings.onStart,
+
+                step: function(now, fx) {
+                    $(self.element).text(self.format(now));
+                    // accepts two params - (now, fx)
+                    self.settings.onStep(now, fx);
+                },
+
+                // accepts three params - (animation object, progress ratio, time remaining(ms))
+                progress: self.settings.onProgress,
+
+                complete: self.settings.onComplete
+            });
         },
 
         format: function(value){
