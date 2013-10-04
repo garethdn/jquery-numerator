@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Jquery Numerator by garethdn</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Jquery Numerator</h1>
+        <h2>A jQuery plugin to easily animate numbers</h2>
+        <a href="https://github.com/garethdn/jquery-numerator" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="jquery-numerator" class="anchor" href="#jquery-numerator"><span class="octicon octicon-link"></span></a>jQuery Numerator</h1>
+
+<p>A jQuery plugin to easily animate numbers.</p>
+
+<h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>Include script after the jQuery library:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"/path/to/jquery-numerator.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+<h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<div class="highlight highlight-js"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'.my-value'</span><span class="p">).</span><span class="nx">numerator</span><span class="p">(</span> <span class="nx">options</span> <span class="p">)</span>
+</pre></div>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<h4>
+<a name="easing-string" class="anchor" href="#easing-string"><span class="octicon octicon-link"></span></a>easing (string)</h4>
+
+<p>An optional parameter to specify the animation easing. Defaults to swing.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">easing</span><span class="o">:</span> <span class="s1">'linear'</span>
+</pre></div>
+
+<h4>
+<a name="duration-number" class="anchor" href="#duration-number"><span class="octicon octicon-link"></span></a>duration (number)</h4>
+
+<p>An optional parameter specifying the length of the animation in milliseconds (ms). Defaults to 500 (1/2 a second).</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">duration</span><span class="o">:</span> <span class="mi">2000</span>
+</pre></div>
+
+<h4>
+<a name="rounding-number" class="anchor" href="#rounding-number"><span class="octicon octicon-link"></span></a>rounding (number)</h4>
+
+<p>This parameter specifies the number of decimal points to display. Defaults to 0.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">rounding</span><span class="o">:</span> <span class="mi">2</span>
+</pre></div>
+
+<h4>
+<a name="tovalue-number" class="anchor" href="#tovalue-number"><span class="octicon octicon-link"></span></a>toValue (number)</h4>
+
+<p>The final value that you want the number to be animated to.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">toValue</span><span class="o">:</span> <span class="mi">205</span>
+</pre></div>
+
+<h4>
+<a name="onstart-function" class="anchor" href="#onstart-function"><span class="octicon octicon-link"></span></a>onStart (function)</h4>
+
+<p>A function to be called when the animation beings.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">onStart</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'Animation started'</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="onstep-function" class="anchor" href="#onstep-function"><span class="octicon octicon-link"></span></a>onStep (function)</h4>
+
+<p>A function to be called at each step of the animation. Accepts two arguments, now and fx.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">onStep</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">now</span><span class="p">,</span> <span class="nx">fx</span><span class="p">){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'The current value is: '</span> <span class="o">+</span> <span class="nx">now</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="oncomplete-function" class="anchor" href="#oncomplete-function"><span class="octicon octicon-link"></span></a>onComplete (function)</h4>
+
+<p>A function to be called when the animation is complete.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">onComplete</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'The animation is now complete'</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h3>
+
+<ul>
+<li>Implement delimiter functionality</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT License
+(c) <a href="http://ie.linkedin.com/in/garethnolan/">Gareth Nolan</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/garethdn/jquery-numerator/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/garethdn/jquery-numerator/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/garethdn/jquery-numerator"></a> is maintained by <a href="https://github.com/garethdn">garethdn</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
