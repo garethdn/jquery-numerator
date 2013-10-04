@@ -299,6 +299,54 @@ h5:before {
   font-size: .8em;
   color: #474747;
 } 
+
+#main-content #numerate {
+  float: right;
+  position: relative;
+  width: 40%;
+  display: block;
+  margin-top: 5px;
+  height: 155px;
+  font-size: 34px;
+  font-weight: bold;
+  border-radius: 15px;
+  border: 2px solid #333;
+  background-color: #2B9E26;
+  color: #eee;
+  cursor:pointer;
+}
+
+#main-content #numerate:hover {
+  background-color: #31742E;
+}
+
+#main-content input,
+#main-content select {
+  padding:5px;
+  font-size:13px;
+  width: 150px;
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#main-content .field label {
+  width: 170px;
+  margin:10px 0;
+  display: inline-block;
+}
+
+#demo-display {
+  text-align: center;
+}
+
+#demo-display p {
+  font-size: 100px;
+  line-height: 200px;
+  height: 200px;
+}
+
 h6:before {
   content: "//////";
   color: #9ddcff;
