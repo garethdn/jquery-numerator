@@ -39,7 +39,7 @@
 
             $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
 
-                duration: self.settings.duration,
+                duration: parseInt(self.settings.duration),
 
                 easing: self.settings.easing,
 
@@ -59,10 +59,10 @@
         },
 
         format: function(value){
-            if (this.settings.rounding < 1) {
+            if ( parseInt(this.settings.rounding ) < 1) {
                 return parseInt(value);
             } else {
-                return parseFloat(value).toFixed(this.settings.rounding);
+                return parseFloat(value).toFixed( parseInt(this.settings.rounding) );
             }
         }
     };
