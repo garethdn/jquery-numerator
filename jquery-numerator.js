@@ -1,5 +1,5 @@
 /* 
- *   jQuery Numerator Plugin 0.1.0
+ *   jQuery Numerator Plugin 0.2.0
  *   https://github.com/garethdn/jquery-numerator
  *
  *   Copyright 2013, Gareth Nolan
@@ -22,6 +22,7 @@
         rounding: 0,
         toValue: undefined,
         fromValue: undefined,
+        queue: false,
         onStart: function(){},
         onStep: function(){},
         onProgress: function(){},
@@ -73,11 +74,38 @@
         },
 
         format: function(value){
+            var self = this;
+
             if ( parseInt(this.settings.rounding ) < 1) {
-                return parseInt(value);
+                value = parseInt(value);
             } else {
-                return parseFloat(value).toFixed( parseInt(this.settings.rounding) );
+                value = parseFloat(value).toFixed( parseInt(this.settings.rounding) );
             }
+
+            if (self.settings.delimiter) {
+                return this.delimit(value)
+            } else {
+                return value;
+            } 
+        },
+
+        delimit: function(value){
+            var self = this;
+
+            value = value.toString();
+
+            if (self.settings.rounding) {
+                var decimals = value.substring( (value.length - (self.settings.rounding + 1)), value.length ),
+                    wholeValue = value.substring( 0, (value.length - (self.settings.rounding + 1)));
+
+                return self.addCommas(wholeValue) + decimals;
+            } else {
+                return self.addCommas(value);
+            }
+        },
+
+        addCommas: function(value){
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.settings.delimiter);
         }
     };
 
@@ -87,7 +115,6 @@
                 $.data(this, 'plugin_' + pluginName, null);
             }
             $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
-
         });
     };
 

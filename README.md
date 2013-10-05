@@ -34,6 +34,14 @@ An optional parameter specifying the length of the animation in milliseconds (ms
 duration: 2000
 ```
 
+#### delimiter (string)
+
+An optional parameter specifying character(s) used to delimit thousands values.
+
+```js
+delimiter: ','
+```
+
 #### rounding (number)
 
 This parameter specifies the number of decimal points to display. Defaults to 0.
