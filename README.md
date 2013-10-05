@@ -90,7 +90,7 @@ onComplete: function(){
 
 ### TODO
 
-* Implement delimiter functionality
+* Implement queue functionality
 
 ## License
 
