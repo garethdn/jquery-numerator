@@ -22,11 +22,11 @@
         rounding: 0,
         toValue: undefined,
         fromValue: undefined,
-        queue: false,
+        addToQueue: false,
         onStart: function(){},
         onStep: function(){},
         onProgress: function(){},
-        onComplete: function(){}
+        onComplete: function(){},
     };
 
     function Plugin ( element, options ) {
@@ -38,9 +38,22 @@
     }
 
     Plugin.prototype = {
+
+        animationQueue: [],
+
+        processing: false,
+
         init: function () {
+
             this.parseElement();
+
+            this.pushToQueue();
+
             this.setValue();
+        },
+
+        pushToQueue: function(){
+            this.animationQueue.push(this.settings);
         },
 
         parseElement: function () {
@@ -52,25 +65,37 @@
         setValue: function() {
             var self = this;
 
-            $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
+            this.processing = true;
 
-                duration: parseInt(self.settings.duration),
+            $.each(self.animationQueue, function(i, item){
 
-                easing: self.settings.easing,
+                console.log('animation item: '+ item);
 
-                start: self.settings.onStart,
+                $({value: item.fromValue}).animate({value: item.toValue}, {
 
-                step: function(now, fx) {
-                    $(self.element).text(self.format(now));
-                    // accepts two params - (now, fx)
-                    self.settings.onStep(now, fx);
-                },
+                    duration: parseInt(item.duration),
 
-                // accepts three params - (animation object, progress ratio, time remaining(ms))
-                progress: self.settings.onProgress,
+                    easing: item.easing,
 
-                complete: self.settings.onComplete
+                    start: item.onStart,
+
+                    step: function(now, fx) {
+                        $(self.element).text(self.format(now));
+                        // accepts two params - (now, fx)
+                        item.onStep(now, fx);
+                    },
+
+                    // accepts three params - (animation object, progress ratio, time remaining(ms))
+                    progress: item.onProgress,
+
+                    complete: function(){
+                        item.onComplete();
+                        self.animationQueue.splice(0,1);
+                    }
+                });
             });
+
+            this.processing = false;
         },
 
         format: function(value){
@@ -110,11 +135,35 @@
     };
 
     $.fn[ pluginName ] = function ( options ) {
+        var self = this;
+
         return this.each(function() {
+
+            // if the plugin exists
             if ( $.data( this, "plugin_" + pluginName ) ) {
-                $.data(this, 'plugin_' + pluginName, null);
+
+                console.log('plugin exists');
+
+                if ( $.data( this, "plugin_" + pluginName ).animationQueue && $.data( this, "plugin_" + pluginName ).animationQueue.length > 0 ) {
+                    
+                    console.log('item in animation queue');
+
+                    var settings = $.extend( {}, defaults, options );
+                    $.data( this, "plugin_" + pluginName ).pushToQueue(settings);
+
+                    console.log($.data( this, "plugin_" + pluginName ).animationQueue);
+
+                } else {
+
+                    $.data(this, 'plugin_' + pluginName, null);
+                    $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+
+                }
+
+            } else {
+                $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
             }
-            $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+
         });
     };
 
