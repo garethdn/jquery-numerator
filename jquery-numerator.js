@@ -63,39 +63,42 @@
         },
 
         setValue: function() {
-            var self = this;
+
+            var self = this,
+                item  = self.animationQueue[0];
+
+            console.log('This item is: ' + JSON.stringify(item));
 
             this.processing = true;
 
-            $.each(self.animationQueue, function(i, item){
+            $({value: item.fromValue}).animate({value: item.toValue}, {
 
-                console.log('animation item: '+ item);
+                duration: parseInt(item.duration),
 
-                $({value: item.fromValue}).animate({value: item.toValue}, {
+                easing: item.easing,
 
-                    duration: parseInt(item.duration),
+                start: item.onStart,
 
-                    easing: item.easing,
+                step: function(now, fx) {
+                    $(self.element).text(self.format(now));
+                    // accepts two params - (now, fx)
+                    item.onStep(now, fx);
+                },
 
-                    start: item.onStart,
+                // accepts three params - (animation object, progress ratio, time remaining(ms))
+                progress: item.onProgress,
 
-                    step: function(now, fx) {
-                        $(self.element).text(self.format(now));
-                        // accepts two params - (now, fx)
-                        item.onStep(now, fx);
-                    },
+                complete: function(){
+                    item.onComplete();
+                    self.animationQueue.splice(0,1);
 
-                    // accepts three params - (animation object, progress ratio, time remaining(ms))
-                    progress: item.onProgress,
-
-                    complete: function(){
-                        item.onComplete();
-                        self.animationQueue.splice(0,1);
+                    if (self.animationQueue.length > 0) {
+                        self.setValue();
+                    } else {
+                        this.processing = false;
                     }
-                });
+                }
             });
-
-            this.processing = false;
         },
 
         format: function(value){
@@ -123,38 +126,33 @@
                 var decimals = value.substring( (value.length - (self.settings.rounding + 1)), value.length ),
                     wholeValue = value.substring( 0, (value.length - (self.settings.rounding + 1)));
 
-                return self.addCommas(wholeValue) + decimals;
+                return self.delimit(wholeValue) + decimals;
             } else {
-                return self.addCommas(value);
+                return self.delimit(value);
             }
         },
 
-        addCommas: function(value){
+        delimit: function(value){
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.settings.delimiter);
         }
     };
 
     $.fn[ pluginName ] = function ( options ) {
-        var self = this;
 
         return this.each(function() {
 
             // if the plugin exists
             if ( $.data( this, "plugin_" + pluginName ) ) {
+                // if there is an animation running and addToQueue is true
+                if ( $.data( this, "plugin_" + pluginName ).animationQueue && $.data( this, "plugin_" + pluginName ).animationQueue.length > 0 && options.addToQueue) {
 
-                console.log('plugin exists');
-
-                if ( $.data( this, "plugin_" + pluginName ).animationQueue && $.data( this, "plugin_" + pluginName ).animationQueue.length > 0 ) {
-                    
-                    console.log('item in animation queue');
-
-                    var settings = $.extend( {}, defaults, options );
-                    $.data( this, "plugin_" + pluginName ).pushToQueue(settings);
-
-                    console.log($.data( this, "plugin_" + pluginName ).animationQueue);
+                    options.fromValue = $.data( this, "plugin_" + pluginName ).settings.toValue;
+                    $.data( this, "plugin_" + pluginName ).settings = $.extend( {}, defaults, options );
+                    $.data( this, "plugin_" + pluginName ).pushToQueue();
 
                 } else {
-
+                    
+                    // destroy and create a new instance
                     $.data(this, 'plugin_' + pluginName, null);
                     $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
 
