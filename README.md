@@ -2,6 +2,10 @@
 
 A jQuery plugin to easily animate numbers.
 
+### Demo page
+
+<a href="http://garethdn.github.io/jquery-numerator/">http://garethdn.github.io/jquery-numerator/</a>
+
 ### Installation
 
 Include script after the jQuery library:
