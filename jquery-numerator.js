@@ -94,7 +94,7 @@
 
             value = value.toString();
 
-            if (self.settings.rounding) {
+            if (self.settings.rounding && parseInt(self.settings.rounding) > 0) {
                 var decimals = value.substring( (value.length - (self.settings.rounding + 1)), value.length ),
                     wholeValue = value.substring( 0, (value.length - (self.settings.rounding + 1)));
 
