@@ -44,7 +44,7 @@
         },
 
         parseElement: function () {
-            var elText = $(this.element).text().trim();
+            var elText = $.trim($(this.element).text());
 
             this.settings.fromValue = this.format(elText);
         },
