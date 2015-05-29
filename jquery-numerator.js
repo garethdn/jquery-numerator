@@ -52,7 +52,14 @@
         setValue: function() {
             var self = this;
 
-            $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
+            var parsedValue;
+            if (typeof self.settings.fromValue == 'string') {
+                parsedValue = parseFloat(self.settings.fromValue.replace(',', '')).toFixed(parseInt(this.settings.rounding));
+            } else {
+                parsedValue = self.settings.fromValue;
+            }
+
+            $({value: parsedValue}).animate({value: self.settings.toValue}, {
 
                 duration: parseInt(self.settings.duration),
 
@@ -75,6 +82,10 @@
 
         format: function(value){
             var self = this;
+
+            if (typeof value == 'string') {
+                value = value.replace(',', '');
+            }
 
             if ( parseInt(this.settings.rounding ) < 1) {
                 value = parseInt(value);
