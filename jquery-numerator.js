@@ -54,7 +54,7 @@
 
             var parsedValue;
             if (typeof self.settings.fromValue == 'string') {
-                parsedValue = parseFloat(self.settings.fromValue.replace(',', '')).toFixed(parseInt(this.settings.rounding));
+                parsedValue = parseFloat(self.settings.fromValue.replace(/,/g, '')).toFixed(parseInt(this.settings.rounding));
             } else {
                 parsedValue = self.settings.fromValue;
             }
@@ -84,7 +84,7 @@
             var self = this;
 
             if (typeof value == 'string') {
-                value = value.replace(',', '');
+                value = value.replace(/,/g, '');
             }
 
             if ( parseInt(this.settings.rounding ) < 1) {
