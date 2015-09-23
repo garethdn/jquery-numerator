@@ -1,5 +1,5 @@
 /* 
- *   jQuery Numerator Plugin 0.2.0
+ *   jQuery Numerator Plugin 0.2.1
  *   https://github.com/garethdn/jquery-numerator
  *
  *   Copyright 2015, Gareth Nolan
@@ -12,7 +12,21 @@
  *   http://www.opensource.org/licenses/MIT
  */
 
-;(function ( $, window, document, undefined ) {
+;(function (factory) {
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+        // AMD is used - Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        factory(require('jquery'));
+    } else {
+        // Neither AMD nor CommonJS used. Use global variables.
+        if (typeof jQuery === 'undefined') {
+            throw 'jquery-numerator requires jQuery to be loaded first';
+        }
+        factory(jQuery);
+    }
+}(function ($) {
 
     var pluginName = "numerator",
     defaults = {
@@ -120,4 +134,4 @@
         });
     };
 
-})( jQuery, window, document );
+}));
