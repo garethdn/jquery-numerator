@@ -1,0 +1,29 @@
+{
+  "name": "jquery-numerator",
+  "description": "A jQuery plugin to easily animate numbers.",
+  "main": [
+    "jquery-numerator.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.9.1"
+  },
+  "keywords": [
+    "jquery",
+    "animate",
+    "numbers",
+    "number",
+    "numerate",
+    "numerator",
+    "stopwatch",
+    "timer"
+  ],
+  "authors": [
+    "Gareth Nolan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garethdn/jquery-numerator.git"
+  },
+  "homepage": "https://github.com/garethdn/jquery-numerator",
+  "license": "MIT"
+}
