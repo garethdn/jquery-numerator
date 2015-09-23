@@ -2,7 +2,7 @@
  *   jQuery Numerator Plugin 0.2.0
  *   https://github.com/garethdn/jquery-numerator
  *
- *   Copyright 2013, Gareth Nolan
+ *   Copyright 2015, Gareth Nolan
  *   http://ie.linkedin.com/in/garethnolan/
 
  *   Based on jQuery Boilerplate by Zeno Rocha with the help of Addy Osmani
@@ -38,6 +38,7 @@
     }
 
     Plugin.prototype = {
+
         init: function () {
             this.parseElement();
             this.setValue();
@@ -46,7 +47,7 @@
         parseElement: function () {
             var elText = $.trim($(this.element).text());
 
-            this.settings.fromValue = this.format(elText);
+            this.settings.fromValue = this.settings.fromValue || this.format(elText);
         },
 
         setValue: function() {
@@ -54,7 +55,7 @@
 
             $({value: self.settings.fromValue}).animate({value: self.settings.toValue}, {
 
-                duration: parseInt(self.settings.duration),
+                duration: parseInt(self.settings.duration, 10),
 
                 easing: self.settings.easing,
 
@@ -77,7 +78,7 @@
             var self = this;
 
             if ( parseInt(this.settings.rounding ) < 1) {
-                value = parseInt(value);
+                value = parseInt(value, 10);
             } else {
                 value = parseFloat(value).toFixed( parseInt(this.settings.rounding) );
             }
@@ -89,22 +90,23 @@
             } 
         },
 
+        // TODO: Add comments to this function
         delimit: function(value){
             var self = this;
 
             value = value.toString();
 
-            if (self.settings.rounding && parseInt(self.settings.rounding) > 0) {
+            if (self.settings.rounding && parseInt(self.settings.rounding, 10) > 0) {
                 var decimals = value.substring( (value.length - (self.settings.rounding + 1)), value.length ),
                     wholeValue = value.substring( 0, (value.length - (self.settings.rounding + 1)));
 
-                return self.addCommas(wholeValue) + decimals;
+                return self.addDelimiter(wholeValue) + decimals;
             } else {
-                return self.addCommas(value);
+                return self.addDelimiter(value);
             }
         },
 
-        addCommas: function(value){
+        addDelimiter: function(value){
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.settings.delimiter);
         }
     };

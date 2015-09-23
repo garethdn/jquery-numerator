@@ -95,6 +95,8 @@ onComplete: function(){
 ### TODO
 
 * Implement queue functionality
+* Publish bower package
+* Publish NPM package
 
 ## License
 
