@@ -54,6 +54,16 @@ This parameter specifies the number of decimal points to display. Defaults to 0.
 rounding: 2
 ```
 
+#### format (function)
+
+A function to be called for custom formatting of the value. If set, `rounding` and `delimiter` will be ignored.
+
+```js
+format: function (val) {
+    return val + ' $';
+}
+```
+
 #### toValue (number)
 
 The final value that you want the number to be animated to.
