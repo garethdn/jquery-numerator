@@ -34,6 +34,7 @@
         duration: 500,
         delimiter: undefined,
         rounding: 0,
+        format: undefined,
         toValue: undefined,
         fromValue: undefined,
         queue: false,
@@ -90,6 +91,10 @@
 
         format: function(value){
             var self = this;
+
+            if ($.isFunction(this.settings.format)) {
+                return this.settings.format(value);
+            }
 
             if ( parseInt(this.settings.rounding ) < 1) {
                 value = parseInt(value, 10);
